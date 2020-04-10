@@ -62,10 +62,9 @@ architecture Behavioral of Tx is
 
 begin
     counter: entity work.Counter(Behavioral)
-        generic map (
-                   M => 162,
-                   N => 8
-                   )
+        generic map ( M => 162,
+                      N => 8
+                    )
         
         port map ( 
                   clk => clk, 
