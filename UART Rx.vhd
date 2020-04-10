@@ -62,6 +62,7 @@ begin
         generic map (
             M => 162,
             N => 8)
+        
         port map ( 
             clk => clk, 
             rst => rst, 
@@ -75,11 +76,13 @@ begin
                 sum_reg <= (others => '0');
                 num_reg <= (others => '0');
                 data_reg <= (others => '0');
+
             else 
                 state <= nextstate;
                 sum_reg <= sum_next;
                 num_reg <= num_next;
                 data_reg <= data_next;
+
             end if;
         end if;        
     end process;
@@ -102,8 +105,10 @@ begin
                     if (sum_reg = 7) then  
                         nextstate <= data; 
                         sum_next <= (others => '0');
+                    
                     else 
                         sum_next <= sum_reg + 1;
+                    
                     end if;
                 end if;
         
@@ -111,6 +116,7 @@ begin
                 if (clk_out = '1') then 
                     if (Rx_ready(0) = '1') then
                         width <= data_width/2;
+                    
                     else 
                         width <= data_width;
                     end if;
@@ -120,17 +126,20 @@ begin
                     
                         if (Rx_ready(0) = '1') then
                             data_next <= "00000000"  & Rx_in & data_reg(data_width/2-1 downto 1);
+                        
                         else 
                             data_next <= Rx_in & data_reg(data_width-1 downto 1);
                         end if;
                     
                         if (num_reg = width - 1 ) then 
                             nextstate <= stop;
+                            
                         else 
                             num_next <= num_reg + 1;
                         end if;
                     else
                         sum_next <= sum_reg + 1;
+                            
                     end if;
                 end if;
 
@@ -141,13 +150,15 @@ begin
                         sum_next <= (others => '0');
                         num_next <= (others => '0');
                         done <= '1';
+                            
                     else 
                         sum_next <= sum_reg + 1;
+                            
                     end if;
                 end if;
         end case;
     end process;
      
-    qout <= data_reg;
+   qout <= data_reg;
      
 end Behavioral;      
