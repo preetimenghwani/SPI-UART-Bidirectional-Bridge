@@ -16,7 +16,7 @@ entity Tx is
     
     generic( data_width : integer := 8;
              stop_ticks: integer := 16
-    );
+           );
             
     port( clk      : in std_logic;
           rst      : in std_logic;
@@ -26,7 +26,7 @@ entity Tx is
           
           Tx_out   : out std_logic;
           done     : out std_logic
-    );
+        );
           
 end Tx;
 
@@ -63,12 +63,15 @@ architecture Behavioral of Tx is
 begin
     counter: entity work.Counter(Behavioral)
         generic map (
-            M => 162,
-            N => 8)
+                   M => 162,
+                   N => 8
+                   )
+        
         port map ( 
-            clk => clk, 
-            rst => rst, 
-            clk_out => clk_out);
+                  clk => clk, 
+                  rst => rst, 
+                  clk_out => clk_out
+                 );
             
     process(clk)
     begin
