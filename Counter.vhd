@@ -25,15 +25,15 @@ begin
         if rising_edge(clk) then
             if (rst = '1' or reg = M) then 
                 reg <= (others => '0');
+            
             else
                 reg <= reg_next;
             end if;
-            
-       end if;
+        end if;
        
     end process;
        
        reg_next <= reg + 1;
-       clk_out <= '1' when reg = M else '0';
+       clk_out  <= '1' when reg = M else '0';
 
 end Behavioral;
