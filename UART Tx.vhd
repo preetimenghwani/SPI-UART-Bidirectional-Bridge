@@ -78,11 +78,13 @@ begin
                 n <= 0;
                 sum_reg <= (others => '0');
                 data_reg <= '1';
+
             else 
                 state <= nextstate;
                 n <= n_next;
                 sum_reg <= sum_next;
                 data_reg <= data_next;
+
             end if;
         end if;
     end process;
@@ -116,8 +118,10 @@ begin
                     if (sum_reg = 15) then
                         sum_next <= (others => '0');
                         nextstate <= data;
+                        
                     else
                         sum_next <= sum_reg + 1;
+                        
                     end if;     
                 end if;
             
@@ -128,13 +132,17 @@ begin
                     if (sum_reg = 15) then
                         if (n = width - 1) then
                             nextstate <= stop;
+                        
                         else
                             n_next <= n+1;
+                        
                         end if;
                     
                         sum_next <= (others => '0');
                     else
+                        
                         sum_next <= sum_reg + 1;
+                        
                     end if;   
                 end if;  
                     
@@ -147,13 +155,15 @@ begin
                         nextstate <= ideal;
                         sum_next <= (others => '0');
                         n_next <= 0;
+                    
                     else
                         sum_next <= sum_reg + 1;
+                    
                     end if;
                 end if;
         end case;
     end process;
                  
-    Tx_out <= data_reg;
+   Tx_out <= data_reg;
     
 end Behavioral;
