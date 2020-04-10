@@ -122,6 +122,7 @@ begin
                         j_next <= N/2;
                         width <= N/2;
                     end if;     
+                        
                     if (establish(1) = '1') then
                         nextstate <= slave_select;
                     end if;
@@ -144,7 +145,9 @@ begin
                             
                         when others =>
                             ss <= "0000";
-                    end case;               
+
+                     end case;   
+                         
                     nextstate <= connected;
 
                 end if;
@@ -165,8 +168,7 @@ begin
                                 end if;
                                     
                                 if (i = width - 1) then
-                                    data_ready <= '0';
-                                    
+                                    data_ready <= '0';        
                                 end if;
                                     
                                 if (i = 0) then
@@ -213,7 +215,7 @@ begin
                     i_next <= N;
                     j_next <= N;
                     x_next <= 0;
-                    nextstate <= ideal;
+                    nextstate <= ideal;   
                                
                 end if;
            end case;
