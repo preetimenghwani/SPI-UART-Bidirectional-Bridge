@@ -90,7 +90,8 @@ begin
                 i <= N;
                 j <= N;
                 x <= 0;
-                Tx_ready <= '0';       
+                Tx_ready <= '0';  
+
             else 
                 state <= nextstate;
                 i <= i_next;
@@ -99,8 +100,9 @@ begin
                 Tx_ready <= Tx_ready_next;
                 mosi <= mosi_next;
                 miso_next <= miso;
-            end if;
-        end if;    
+
+            end if;            
+        end if;  
     end process;  
     
     process(clk)
@@ -119,8 +121,7 @@ begin
                         i_next <= N/2;
                         j_next <= N/2;
                         width <= N/2;
-                    end if;
-                        
+                    end if;     
                     if (establish(1) = '1') then
                         nextstate <= slave_select;
                     end if;
@@ -143,15 +144,16 @@ begin
                             
                         when others =>
                             ss <= "0000";
-                    end case;
-                                
+                    end case;               
                     nextstate <= connected;
+
                 end if;
                 
             when connected =>
                 if (clk_out = '1') then
                     if (establish(1) = '0') then
                         nextstate <= stop;
+            
                     else
                         if (slave = "00") then
                             Tx_ready_next <= '1';
@@ -164,16 +166,20 @@ begin
                                     
                                 if (i = width - 1) then
                                     data_ready <= '0';
+                                    
                                 end if;
                                     
                                 if (i = 0) then
                                     i_next <= i-1;
+                                    
                                 elsif (i = -1) then 
                                     nextstate <= stop;
                                     data_ready <= '0';
+                                    
                                 else
                                     mosi_next <= Tx_reg(i-1);
                                     i_next <= i-1;
+                        
                                 end if;
                              end if;   
                         end if;
@@ -191,9 +197,11 @@ begin
                                 if (j = 0) then
                                     j_next <= width;
                                     nextstate <= stop;
+                                
                                 else 
                                     qout(j-1) <= miso_next;
                                     j_next <= j-1;
+                                
                                 end if;
                            end if;
                         end if;
@@ -206,8 +214,9 @@ begin
                     j_next <= N;
                     x_next <= 0;
                     nextstate <= ideal;
+                               
                 end if;
-        end case;
+           end case;
     end process;     
             
 end Behavioral;
