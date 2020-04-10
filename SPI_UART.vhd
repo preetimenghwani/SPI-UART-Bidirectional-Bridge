@@ -23,7 +23,7 @@ entity SPI_UART is
           
           data_in     : in std_logic_vector(15 downto 0);
           data_out    : out std_logic_vector(15 downto 0)
-    );
+        );
     
 end SPI_UART;
 
@@ -103,6 +103,7 @@ begin
         generic map (
             data_width => 16,
             stop_ticks => 16)
+        
         port map ( 
             clk => clk,
             rst => rst,
@@ -118,6 +119,7 @@ begin
         generic map (
             data_width => 16,
             stop_ticks => 16)
+        
         port map ( 
             clk => clk, 
             rst => rst, 
@@ -133,35 +135,37 @@ begin
     begin
         case start is
             when '1' =>
-                establish(1) <= '1';
-            
+                establish(1) <= '1';   
             when others =>
                 establish(1) <= '0';
+        
         end case;
         
         case slave_width is
             when '1' =>
-                establish(0) <= '1';    -- 8-bit
+                establish(0) <= '1';    -- 8-bit  
             
             when '0' =>
                 establish(0) <= '0';    -- 16-bit
-            
+        
             when others =>
                 null;
+
         end case;
     
         case slave is
             when "00" =>
                 din1 <= data_in;
                 data_out <= dout2;
-        
+
             when "01" =>
                 din2 <= data_in;
                 data_out <= dout1;
             
             when others =>
                 null;
+
         end case;
     end process;       
-    
+            
 end Behavioral;
